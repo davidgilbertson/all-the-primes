@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var lastPrime = 1;
+    var lastPrime = 3;
     var primeListEl = document.getElementById('prime-list');
     var viewPortHeight = window.innerHeight;
     var listHeight = primeListEl.offsetHeight;
@@ -23,14 +23,11 @@
         var result = 0;
 
         while (testNum < candidate) {
-            //console.log('  --  >  testNum, candidate:', testNum, candidate);
 
             result = (candidate / testNum);
             if (parseInt(result, 10) === result) {
-                //console.log('  --  >  This is not a prime:', candidate, 'because it divides by', testNum);
                 candidate += 2;
                 testNum = Math.floor(Math.sqrt(candidate));
-                //continue;
             } else {
                 testNum++;
             }
@@ -39,21 +36,24 @@
         return candidate;
     }
 
-    function appendNextPrime(primeListEl, lastPrime) {
+    function appendNextPrime() {
         var nextPrime = getNextPrime();
 
         primeListEl.appendChild(makeEl(nextPrime, 'p'));
         return nextPrime;
     }
 
+
+    primeListEl.appendChild(makeEl(3, 'p'));
+
+    // Kick it off
     for (i = 0; i < 40; i++) {
-        lastPrime = appendNextPrime(primeListEl, lastPrime);
+        lastPrime = appendNextPrime(lastPrime);
     }
 
     window.addEventListener('scroll', function() {
         if (spaceBelow < viewPortHeight * 5) {
             lastPrime = appendNextPrime(primeListEl, lastPrime);
-            //console.log('  --  >  Printing another one');
         }
     });
 })();

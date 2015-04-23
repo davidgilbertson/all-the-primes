@@ -1,7 +1,8 @@
 body {
     font-family: sans-serif;
-    color: #222;
+    color: #fff;
     text-align: center;
+    background: steelblue;
 }
 p {
     margin: 5px 0;
