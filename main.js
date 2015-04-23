@@ -1,19 +1,19 @@
 (function() {
     'use strict';
 
-    var lastPrime = 3;
     var primeListEl = document.getElementById('prime-list');
     var viewPortHeight = window.innerHeight;
     var listHeight = primeListEl.offsetHeight;
     var scrollPos = document.body.scrollTop;
     var spaceBelow = listHeight - scrollPos - viewPortHeight;
+    var lastPrime = 3;
     var i;
 
     function makeEl(text, tagName) {
-        tagName = tagName || 'div';
         var el = document.createElement(tagName);
-        var text = document.createTextNode(text);
-        el.appendChild(text);
+
+        el.appendChild(document.createTextNode(text));
+
         return el;
     }
 
@@ -33,27 +33,22 @@
             }
         }
 
+        lastPrime = candidate;
         return candidate;
     }
 
     function appendNextPrime() {
-        var nextPrime = getNextPrime();
-
-        primeListEl.appendChild(makeEl(nextPrime, 'p'));
-        return nextPrime;
+        primeListEl.appendChild(makeEl(getNextPrime(), 'p'));
     }
 
-
-    primeListEl.appendChild(makeEl(3, 'p'));
-
-    // Kick it off
-    for (i = 0; i < 40; i++) {
-        lastPrime = appendNextPrime(lastPrime);
+    // Kick it off with a bunch of primes
+    for (i = 0; i < 101; i++) {
+        appendNextPrime();
     }
 
     window.addEventListener('scroll', function() {
         if (spaceBelow < viewPortHeight * 5) {
-            lastPrime = appendNextPrime(primeListEl, lastPrime);
+            appendNextPrime();
         }
     });
 })();
